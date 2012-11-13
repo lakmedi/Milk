@@ -108,7 +108,7 @@ Begin VB.Form frmServer
       _ExtentX        =   2355
       _ExtentY        =   661
       Appearance      =   3
-      Caption         =   "C&lose"
+      Caption         =   "&Exit"
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   9.75
@@ -173,7 +173,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub btnClose_Click()
-    Unload Me
+    End
 End Sub
 
 Private Sub btnConnect_Click()

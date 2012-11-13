@@ -351,7 +351,7 @@ Begin VB.Form frmDailyMilkCollectionReport
       CalendarForeColor=   12583104
       CalendarTitleForeColor=   12583104
       CustomFormat    =   "dd MM yyyy"
-      Format          =   119865347
+      Format          =   134545411
       CurrentDate     =   39682
    End
    Begin MSDataListLib.DataCombo cmbCollectingCenter 
@@ -790,6 +790,7 @@ Private Sub btnAdd_Click()
         temCr = OwnCommisionRate(cmbSupplierName.BoundText, Val(txtLiters.Text))
         !CommisionRate = temCr
         !Commision = temCr * Val(txtLiters)
+        !AddedMethod = "DMCR Add"
         .Update
         .Close
     End With
@@ -798,7 +799,7 @@ Private Sub btnAdd_Click()
     
     
     Call CalculateTotals
-    Call WriteDailyCollection
+    'Call WriteDailyCollection
     
     
     'Call ClearValues
@@ -1119,7 +1120,7 @@ Private Sub btnClose_Click()
 End Sub
 
 Private Sub btnDelete_Click()
-    Call WriteDailyCollection
+   ' Call WriteDailyCollection
     Dim temID As Long
     If gridMilk.Rows < 2 Then
         MsgBox "Nothing to Delete"
@@ -1152,7 +1153,7 @@ Private Sub btnDelete_Click()
     Call FillGrid
     Call ClearValues
     Call CalculateTotals
-    Call WriteDailyCollection
+    'Call WriteDailyCollection
     cmbSupplierName.SetFocus
 End Sub
 
@@ -1260,6 +1261,11 @@ Private Sub btnUpdatePrices_Click()
                 !SNF = SNF(!LMR, !FAT)
                 !Price = Price(!FAT, !SNF, Val(cmbCollectingCenter.BoundText), !SupplierID, dtpDate.Value)
                 !Value = !Price * !Liters
+                Dim temTemCr As Double
+                temTemCr = OwnCommisionRate(!SupplierID, !Liters)
+                !CommisionRate = temTemCr
+                !Commision = temCr * Val(txtLiters)
+                !AddedMethod = "DMCR Update Prices"
                 .Update
                 .MoveNext
             Wend
@@ -1318,17 +1324,20 @@ Private Sub cmbCollectingCenter_Change()
         
             btnAdd.Enabled = True
             btnDelete.Enabled = True
+            btnUpdatePrices.Enabled = True
             gridMilk.Enabled = True
             
             If Val(cmbSecession.BoundText) = 1 Then
                 If !MaxOfToDate >= dtpDate.Value Then
                     btnAdd.Enabled = False
                     btnDelete.Enabled = False
+                    btnUpdatePrices.Enabled = False
                     gridMilk.Enabled = False
                 Else
                     btnAdd.Enabled = True
                     btnDelete.Enabled = True
                     gridMilk.Enabled = True
+                    
                 End If
                 
             Else
@@ -1337,6 +1346,7 @@ Private Sub cmbCollectingCenter_Change()
                     btnAdd.Enabled = False
                     btnDelete.Enabled = False
                     gridMilk.Enabled = False
+                    btnUpdatePrices.Enabled = False
                 Else
                     btnAdd.Enabled = True
                     btnDelete.Enabled = True
@@ -1384,12 +1394,14 @@ Private Sub cmbSecession_Change()
         
             btnAdd.Enabled = True
             btnDelete.Enabled = True
+            btnUpdatePrices.Enabled = True
             gridMilk.Enabled = True
             
             If Val(cmbSecession.BoundText) = 1 Then
                 If !MaxOfToDate >= dtpDate.Value Then
                     btnAdd.Enabled = False
                     btnDelete.Enabled = False
+                    btnUpdatePrices.Enabled = False
                     gridMilk.Enabled = False
                 Else
                     btnAdd.Enabled = True
@@ -1402,6 +1414,7 @@ Private Sub cmbSecession_Change()
                 If !MaxOfToDate > dtpDate.Value Then
                     btnAdd.Enabled = False
                     btnDelete.Enabled = False
+                    btnUpdatePrices.Enabled = False
                     gridMilk.Enabled = False
                 Else
                     btnAdd.Enabled = True
@@ -1414,7 +1427,7 @@ Private Sub cmbSecession_Change()
             dtpDate.Value = Date
         End If
     End With
-    
+    MsgBox "Prices Updated"
 End Sub
 
 
@@ -1457,6 +1470,7 @@ Private Sub dtpDate_Change()
         
             btnAdd.Enabled = False
             btnDelete.Enabled = False
+            btnUpdatePrices.Enabled = False
             gridMilk.Enabled = False
             
             
@@ -1464,6 +1478,7 @@ Private Sub dtpDate_Change()
                 If !MaxOfToDate >= dtpDate.Value Then
                     btnAdd.Enabled = False
                     btnDelete.Enabled = False
+                    btnUpdatePrices.Enabled = False
                     gridMilk.Enabled = False
                 Else
                     btnAdd.Enabled = True
@@ -1476,6 +1491,7 @@ Private Sub dtpDate_Change()
                 If !MaxOfToDate > dtpDate.Value Then
                     btnAdd.Enabled = False
                     btnDelete.Enabled = False
+                    btnUpdatePrices.Enabled = False
                     gridMilk.Enabled = False
                 Else
                     btnAdd.Enabled = True
@@ -1515,6 +1531,7 @@ Select Case UserAuthorityLevel
             btnUpdatePrices.Enabled = True
     
         Case Authority.Analyzer '2
+            btnUpdatePrices.Visible = False
             btnAdd.Visible = False
             btnDelete.Visible = False
             btnPrint.Visible = False
@@ -1523,6 +1540,7 @@ Select Case UserAuthorityLevel
 
         
         Case Authority.Viewer '1
+            btnUpdatePrices.Visible = False
             btnAdd.Visible = False
             btnDelete.Visible = False
             btnPrint.Visible = False
