@@ -14,7 +14,7 @@ Private Function ItemToDeduct(SupplierID As Long) As ItemDeduct()
     Dim i As Integer
     With rsTem
         If .State = 1 Then .Close
-        temSQL = "SELECT Sum(tblItemIssue.ToPay) AS SumOfToPay, Avg(tblItemIssue.Rate) AS AvgOfRate, tblItemIssue.ItemID " & _
+        temSQL = "SELECT Sum(tblItemIssue.ToPay) AS SumOfToPay, Max(tblItemIssue.Rate) AS AvgOfRate, tblItemIssue.ItemID " & _
                     "From tblItemIssue " & _
                     "WHERE (((tblItemIssue.SupplierID)=" & SupplierID & ") AND ((tblItemIssue.Deleted) = 0)) " & _
                     "GROUP BY tblItemIssue.ItemID " & _

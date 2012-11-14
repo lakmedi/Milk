@@ -123,14 +123,8 @@ Begin VB.MDIForm MDIMain
    End
    Begin VB.Menu mnuBAckOffice 
       Caption         =   "&Back Office"
-      Begin VB.Menu mnuBackOfficeGenerateIndividualPayments 
-         Caption         =   "Approve Payments"
-      End
       Begin VB.Menu mnuBackOfficePrintIndividualPayments 
          Caption         =   "Print Payments"
-      End
-      Begin VB.Menu mnuConfirmPayments 
-         Caption         =   "Confirm Payments"
       End
       Begin VB.Menu mnuApprovals 
          Caption         =   "Approvals"
@@ -300,13 +294,13 @@ Private Sub correctError()
     End With
 End Sub
 
-Private Sub correctCentreId(collectionId As Long, ccId As Long)
+Private Sub correctCentreId(collectionId As Long, CCID As Long)
     Dim rsTem As New ADODB.Recordset
     With rsTem
         temSQL = "select * from dbo.tblCollection where dbo.tblCollection.CollectionID =  " & collectionId
         .Open temSQL, cnnStores, adOpenStatic, adLockOptimistic
         If .RecordCount > 0 Then
-            !CollectingCenterID = ccId
+            !CollectingCenterID = CCID
             .Update
         End If
         .Close
@@ -358,9 +352,9 @@ Private Sub MDIForm_Load()
 '        mnuIssuesIncome.Visible = False
 
         mnuBAckOffice.Visible = False
-        mnuBackOfficeGenerateIndividualPayments.Visible = False
+'        mnuBackOfficeGenerateIndividualPayments.Visible = False
         mnuBackOfficePrintIndividualPayments.Visible = False
-        mnuConfirmPayments.Visible = False
+'        mnuConfirmPayments.Visible = False
         mnuApprovals.Visible = False
         mnuApproveAdditionalCommisions.Visible = False
 '        mnuApproveAdditionalDeductions.Visible = False
@@ -387,9 +381,9 @@ Private Sub MDIForm_Load()
         mnuPersonalDetails.Visible = False
 
         mnuWindow.Visible = False
-        mnuBackOfficeGenerateIndividualPayments.Visible = False
+'        mnuBackOfficeGenerateIndividualPayments.Visible = False
         mnuBackOfficePrintIndividualPayments.Visible = False
-        mnuConfirmPayments.Visible = False
+'        mnuConfirmPayments.Visible = False
 '        mnuDetectErrors.Visible = False
     End If
 
@@ -560,7 +554,7 @@ Select Case UserAuthorityLevel
             mnuIssuesExpences.Visible = True
             mnuIssuesIncome.Visible = True
 
-            mnuBackOfficeGenerateIndividualPayments.Visible = True
+'            mnuBackOfficeGenerateIndividualPayments.Visible = True
             mnuBackOfficePrintIndividualPayments.Visible = True
             mnuOutstandings.Visible = True
             mnuBackOfficeReports.Visible = True
@@ -583,7 +577,7 @@ Select Case UserAuthorityLevel
             mnuBackOfficeReportsSuppliersMilkCollection.Visible = True
             mnuBackOfficeReportsCollectingCentersMilkCollection.Visible = True
             mnuReportsTotalMilkCollection.Visible = True
-            mnuBackOfficeGenerateIndividualPayments.Visible = True
+'            mnuBackOfficeGenerateIndividualPayments.Visible = True
             mnuBackOfficePrintIndividualPayments.Visible = True
             mnuOutstandings.Visible = True
             mnuProfits.Visible = True
@@ -591,9 +585,9 @@ Select Case UserAuthorityLevel
             mnuProfitsExpence.Visible = True
             mnuProfitsProfit.Visible = True
 
-            mnuBackOfficeGenerateIndividualPayments.Visible = True
+'            mnuBackOfficeGenerateIndividualPayments.Visible = True
             mnuBackOfficePrintIndividualPayments.Visible = True
-            mnuConfirmPayments.Visible = True
+'            mnuConfirmPayments.Visible = True
             mnuDetectErrors.Visible = True
             mnuDeleteErrors.Visible = True
             
@@ -637,9 +631,9 @@ Select Case UserAuthorityLevel
             mnuIssuesExpences.Visible = True
             mnuIssuesIncome.Visible = True
 
-            mnuBackOfficeGenerateIndividualPayments.Visible = True
+'            mnuBackOfficeGenerateIndividualPayments.Visible = True
             mnuBackOfficePrintIndividualPayments.Visible = True
-            mnuConfirmPayments.Visible = True
+'            mnuConfirmPayments.Visible = True
             mnuApprovals.Visible = True
             mnuOutstandings.Visible = True
             mnuBackOfficeReports.Visible = True
@@ -674,9 +668,9 @@ Select Case UserAuthorityLevel
             mnuApproveAdditionalDeductions.Visible = True
             mnuApproveAdditionalCommisions.Visible = True
 
-            mnuBackOfficeGenerateIndividualPayments.Visible = True
+'            mnuBackOfficeGenerateIndividualPayments.Visible = True
             mnuBackOfficePrintIndividualPayments.Visible = True
-            mnuConfirmPayments.Visible = True
+'            mnuConfirmPayments.Visible = True
             mnuDetectErrors.Visible = True
             mnuDeleteErrors.Visible = True
 
@@ -718,9 +712,9 @@ Select Case UserAuthorityLevel
             mnuIssuesExpences.Visible = True
             mnuIssuesIncome.Visible = True
 
-            mnuBackOfficeGenerateIndividualPayments.Visible = True
+'            mnuBackOfficeGenerateIndividualPayments.Visible = True
             mnuBackOfficePrintIndividualPayments.Visible = True
-            mnuConfirmPayments.Visible = True
+'            mnuConfirmPayments.Visible = True
             mnuApprovals.Visible = True
             mnuOutstandings.Visible = True
             mnuBackOfficeReports.Visible = True
@@ -751,9 +745,9 @@ Select Case UserAuthorityLevel
             mnuApproveAdditionalDeductions.Visible = True
             mnuApproveAdditionalCommisions.Visible = True
 
-            mnuBackOfficeGenerateIndividualPayments.Visible = True
+'            mnuBackOfficeGenerateIndividualPayments.Visible = True
             mnuBackOfficePrintIndividualPayments.Visible = True
-            mnuConfirmPayments.Visible = True
+'            mnuConfirmPayments.Visible = True
             mnuDetectErrors.Visible = True
             mnuDeleteErrors.Visible = True
 
@@ -805,9 +799,9 @@ Select Case UserAuthorityLevel
     
 'Back Office
 
-    mnuBackOfficeGenerateIndividualPayments.Visible = GenerateIndividualPaymentsAllowed
+'    mnuBackOfficeGenerateIndividualPayments.Visible = GenerateIndividualPaymentsAllowed
     mnuBackOfficePrintIndividualPayments.Visible = PrintIndividualPaymentsAllowed
-    mnuConfirmPayments.Visible = ConfirmPaymentsAllowed
+'    mnuConfirmPayments.Visible = ConfirmPaymentsAllowed
     mnuApprovals.Visible = ApprovalsAllowed
     mnuOutstandings.Visible = OutstandingAllowed
     mnuBackOfficeReports.Visible = ReportsAllowed

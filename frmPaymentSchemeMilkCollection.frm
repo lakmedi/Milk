@@ -1,9 +1,9 @@
 VERSION 5.00
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "msdatlst.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
 Object = "{575E4548-F564-4A9D-8667-6EE848F77EB8}#1.0#0"; "ButtonEx.ocx"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "msdatlst.ocx"
 Begin VB.Form frmPaymentSchemeMilkCollection 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Payment Scheme Milk Supply"
@@ -218,7 +218,7 @@ Begin VB.Form frmPaymentSchemeMilkCollection
       _Version        =   393216
       Enabled         =   0   'False
       CustomFormat    =   "dd MMMM yyyy"
-      Format          =   42663939
+      Format          =   142475267
       CurrentDate     =   39682
    End
    Begin MSComCtl2.DTPicker dtpTo 
@@ -233,7 +233,7 @@ Begin VB.Form frmPaymentSchemeMilkCollection
       _Version        =   393216
       Enabled         =   0   'False
       CustomFormat    =   "dd MMMM yyyy"
-      Format          =   42663939
+      Format          =   122683395
       CurrentDate     =   39682
    End
    Begin MSComctlLib.ProgressBar pgb1 
@@ -721,7 +721,7 @@ Private Sub btnProcess_Click()
             txtDeductions.Text = Format(TotalDeductions, "0.00")
             txtTotalPayment.Text = Format(TotalNetPayment, "0.00")
             If TotalVolume <> 0 Then
-                txtAverage.Text = Format(TotalMilkPayments / TotalVolume, "0.00")
+                txtAverage.Text = Format(TotalMilkPayments / TotalVolume, "0.000")
             Else
                 txtAverage.Text = "0.00"
             End If

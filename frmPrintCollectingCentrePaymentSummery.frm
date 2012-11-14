@@ -53,10 +53,10 @@ Begin VB.Form frmPrintCollectingCentrePaymentSummery
    End
    Begin VB.TextBox txtValues 
       Height          =   1455
-      Left            =   11640
+      Left            =   13440
       MultiLine       =   -1  'True
       TabIndex        =   37
-      Top             =   240
+      Top             =   840
       Visible         =   0   'False
       Width           =   1095
    End
@@ -324,7 +324,7 @@ Begin VB.Form frmPrintCollectingCentrePaymentSummery
       _ExtentY        =   661
       _Version        =   393216
       CustomFormat    =   "dd MMMM yyyy"
-      Format          =   146210819
+      Format          =   180879363
       CurrentDate     =   39682
    End
    Begin MSComCtl2.DTPicker dtpTo 
@@ -337,7 +337,7 @@ Begin VB.Form frmPrintCollectingCentrePaymentSummery
       _ExtentY        =   661
       _Version        =   393216
       CustomFormat    =   "dd MMMM yyyy"
-      Format          =   145686531
+      Format          =   180879363
       CurrentDate     =   39682
    End
    Begin btButtonEx.ButtonEx btnPrintCommisions 
@@ -873,7 +873,7 @@ Private Sub btnPrintSummery_Click()
         Printer.Print Tab(tabMilk); "Total Volume";
         Printer.Print Tab(tabNetPayment - (Len(txtVolume.Text))); txtVolume.Text
         Printer.Print
-        Printer.Print Tab(tabMilk); "Total Volume";
+        Printer.Print Tab(tabMilk); "Average price";
         Printer.Print Tab(tabNetPayment - (Len(txtAverage.Text))); txtAverage.Text
         
         Printer.Print
@@ -1053,7 +1053,9 @@ Private Sub btnProcess_Click()
                             .Text = SupplierID
                             .col = 2
     
-                            If temOwnCommision <> 0 Or temAdditionalCommision <> 0 Or temOthersCommision <> 0 Then .Text = Format(temOwnCommision + temOthersCommision + temAdditionalCommision, "0.00")
+                            If temOwnCommision <> 0 Or temAdditionalCommision <> 0 Or temOthersCommision <> 0 Then
+                                .Text = Format(temOwnCommision + temOthersCommision + temAdditionalCommision, "0.00")
+                            End If
                             TotalCommisions = TotalCommisions + temOwnCommision + temOthersCommision + temAdditionalCommision
                             If MyMilkCollectionM.Supplied = True Or MyMilkCollectionE.Supplied = True Then
                                 .col = 3
@@ -1115,7 +1117,7 @@ Private Sub btnProcess_Click()
             
             
             If TotalVolume <> 0 Then
-                txtAverage.Text = Format(TotalMilkPayments / TotalVolume, "0.00")
+                txtAverage.Text = Format(TotalMilkPayments / TotalVolume, "0.0000")
             Else
                 txtAverage.Text = "0.00"
             End If

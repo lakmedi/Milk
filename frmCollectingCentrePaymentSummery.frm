@@ -1,9 +1,9 @@
 VERSION 5.00
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "msdatlst.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
 Object = "{575E4548-F564-4A9D-8667-6EE848F77EB8}#1.0#0"; "ButtonEx.ocx"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "msdatlst.ocx"
 Begin VB.Form frmCollectingCentrePaymentSummery 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Generate Collecting Center Payment Advice"
@@ -293,7 +293,7 @@ Begin VB.Form frmCollectingCentrePaymentSummery
       _Version        =   393216
       Enabled         =   0   'False
       CustomFormat    =   "dd MMMM yyyy"
-      Format          =   113901571
+      Format          =   142475267
       CurrentDate     =   39682
    End
    Begin MSComCtl2.DTPicker dtpTo 
@@ -306,7 +306,7 @@ Begin VB.Form frmCollectingCentrePaymentSummery
       _ExtentY        =   661
       _Version        =   393216
       CustomFormat    =   "dd MMMM yyyy"
-      Format          =   3735555
+      Format          =   142475267
       CurrentDate     =   39682
    End
    Begin btButtonEx.ButtonEx btnPrintCommisions 
@@ -1213,7 +1213,7 @@ Private Sub btnProcess_Click()
                 Wend
             End If
             rsCenter.Close
-            txtVolume.Text = Format(TotalVolume, "0.00")
+            txtVolume.Text = Format(TotalVolume, "0.000")
             txtMilkPayments.Text = Format(TotalMilkPayments, "0.00")
             txtCommision.Text = Format(TotalCommisions, "0.00")
             txtDeductions.Text = Format(TotalDeductions, "0.00")
@@ -1223,7 +1223,7 @@ Private Sub btnProcess_Click()
             
             
             If TotalVolume <> 0 Then
-                txtAverage.Text = Format(TotalMilkPayments / TotalVolume, "0.00")
+                txtAverage.Text = Format(TotalMilkPayments / TotalVolume, "0.00000")
             Else
                 txtAverage.Text = "0.00"
             End If
@@ -1380,7 +1380,7 @@ Private Sub cmbCollectingCenter_Change()
                .Open temSQL, cnnStores, adOpenStatic, adLockReadOnly
         If IsNull(!MaxOfToDate) = False Then
             dtpFrom.Enabled = False
-            dtpTo.Enabled = False
+            dtpTo.Enabled = True
             dtpFrom.Value = !MaxOfToDate + 1
             dtpTo.Value = !MaxOfToDate + 1
         Else

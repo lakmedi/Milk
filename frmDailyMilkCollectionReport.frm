@@ -351,7 +351,7 @@ Begin VB.Form frmDailyMilkCollectionReport
       CalendarForeColor=   12583104
       CalendarTitleForeColor=   12583104
       CustomFormat    =   "dd MM yyyy"
-      Format          =   134545411
+      Format          =   104726531
       CurrentDate     =   39682
    End
    Begin MSDataListLib.DataCombo cmbCollectingCenter 
@@ -915,7 +915,7 @@ Private Sub WriteDailyCollection()
             temSQL = "SELECT Sum(tblSecessionCollection.TotalVolume) AS SumOfTotalVolume, Sum(tblSecessionCollection.TotalLMR) AS SumOfTotalLMR, Sum(tblSecessionCollection.TotalFAT) AS SumOfTotalFAT, Sum(tblSecessionCollection.ActualValue) AS SumOfActualValue, Sum(tblSecessionCollection.ValueDifference) AS SumOfValueDifference,  Sum(tblSecessionCollection.TotalValue) AS SumOfTotalValue, Avg(tblSecessionCollection.TestedLMR) AS AvgOfTestedLMR, Avg(tblSecessionCollection.TestedFAT) AS AvgOfTestedFAT " & _
                         "FROM tblSecessionCollection Where ProgramDate = '" & Format(dtpDate.Value + 1, "dd MMMM yyyy") & "' And CollectingCenterID = " & Val(cmbCollectingCenter.BoundText)
         End If
-        .Open temSQL, cnnStores, adOpenStatic, adLockOptimistic
+        .Open temSQL, cnnStores, adOpenStatic, adLockReadOnly
         If .RecordCount > 0 Then
             TotalVolume = !SumOfTotalVolume
             TotalLMR = !SumOfTotalLMR
@@ -1254,7 +1254,7 @@ Private Sub btnUpdatePrices_Click()
     Dim rsTem As New ADODB.Recordset
     With rsTem
         If .State = 1 Then .Close
-        temSQL = "SELECT tblCollection.*, tblSupplier.* FROM tblCollection LEFT JOIN tblSupplier ON tblCollection.SupplierID = tblSupplier.SupplierID Where tblCollection.Deleted = 0 And tblCollection.Date = '" & Format(dtpDate.Value, "dd MMMM yyyy") & "' And tblCollection.SecessionID = " & Val(cmbSecession.BoundText) & " And tblCollection.CollectingCenterID = " & Val(cmbCollectingCenter.BoundText) & " And tblCollection.Deleted = 0 ORDER BY tblCollection.CollectionID DESC"
+        temSQL = "SELECT * FROM tblCollection WHERE tblCollection.Deleted = 0 And tblCollection.Date = '" & Format(dtpDate.Value, "dd MMMM yyyy") & "' And tblCollection.SecessionID = " & Val(cmbSecession.BoundText) & " And tblCollection.CollectingCenterID = " & Val(cmbCollectingCenter.BoundText) & " And tblCollection.Deleted = 0 ORDER BY tblCollection.CollectionID DESC"
         .Open temSQL, cnnStores, adOpenStatic, adLockOptimistic
         If .RecordCount > 0 Then
             While .EOF = False
@@ -1262,9 +1262,16 @@ Private Sub btnUpdatePrices_Click()
                 !Price = Price(!FAT, !SNF, Val(cmbCollectingCenter.BoundText), !SupplierID, dtpDate.Value)
                 !Value = !Price * !Liters
                 Dim temTemCr As Double
+                
+                
+                
                 temTemCr = OwnCommisionRate(!SupplierID, !Liters)
+                If temTemCr <> 0 Then
+                    DoEvents
+                End If
+                
                 !CommisionRate = temTemCr
-                !Commision = temCr * Val(txtLiters)
+                !Commision = temTemCr * !Liters
                 !AddedMethod = "DMCR Update Prices"
                 .Update
                 .MoveNext
@@ -1336,6 +1343,7 @@ Private Sub cmbCollectingCenter_Change()
                 Else
                     btnAdd.Enabled = True
                     btnDelete.Enabled = True
+                    btnUpdatePrices.Enabled = True
                     gridMilk.Enabled = True
                     
                 End If
@@ -1350,6 +1358,7 @@ Private Sub cmbCollectingCenter_Change()
                 Else
                     btnAdd.Enabled = True
                     btnDelete.Enabled = True
+                    btnUpdatePrices.Enabled = True
                     gridMilk.Enabled = True
                 End If
             End If
@@ -1407,6 +1416,7 @@ Private Sub cmbSecession_Change()
                     btnAdd.Enabled = True
                     btnDelete.Enabled = True
                     gridMilk.Enabled = True
+                    btnUpdatePrices.Enabled = True
                 End If
                 
             Else
@@ -1420,6 +1430,7 @@ Private Sub cmbSecession_Change()
                     btnAdd.Enabled = True
                     btnDelete.Enabled = True
                     gridMilk.Enabled = True
+                    btnUpdatePrices.Enabled = True
                 End If
             End If
         Else
@@ -1483,6 +1494,7 @@ Private Sub dtpDate_Change()
                 Else
                     btnAdd.Enabled = True
                     btnDelete.Enabled = True
+                    btnUpdatePrices.Enabled = True
                     gridMilk.Enabled = True
                 End If
                 
@@ -1497,6 +1509,7 @@ Private Sub dtpDate_Change()
                     btnAdd.Enabled = True
                     btnDelete.Enabled = True
                     gridMilk.Enabled = True
+                    btnUpdatePrices.Enabled = True
                 End If
             End If
         Else
