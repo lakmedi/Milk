@@ -293,7 +293,7 @@ Begin VB.Form frmCollectingCentrePaymentSummery
       _Version        =   393216
       Enabled         =   0   'False
       CustomFormat    =   "dd MMMM yyyy"
-      Format          =   142475267
+      Format          =   123863043
       CurrentDate     =   39682
    End
    Begin MSComCtl2.DTPicker dtpTo 
@@ -306,7 +306,7 @@ Begin VB.Form frmCollectingCentrePaymentSummery
       _ExtentY        =   661
       _Version        =   393216
       CustomFormat    =   "dd MMMM yyyy"
-      Format          =   142475267
+      Format          =   123863043
       CurrentDate     =   39682
    End
    Begin btButtonEx.ButtonEx btnPrintCommisions 
