@@ -273,25 +273,25 @@ End Sub
 
 
 Private Sub correctError()
-    temSQL = "SELECT dbo.tblCollection.CollectionID, dbo.tblCollectingCenter.CollectingCenterID " & _
-        "                 " & _
-"FROM          dbo.tblCollectingCenter LEFT OUTER JOIN " & _
-  "                      dbo.tblSupplier ON dbo.tblCollectingCenter.CollectingCenterID = dbo.tblSupplier.CollectingCenterID RIGHT OUTER JOIN " & _
- "                       dbo.tblCollection ON dbo.tblSupplier.SupplierID = dbo.tblCollection.SupplierID " & _
-"Where (dbo.tblCollectingCenter.CollectingCenterID <> dbo.tblCollection.CollectingCenterID) " & _
-"ORDER BY dbo.tblCollection.CollectionID DESC"
-
-    Dim rsTem As New ADODB.Recordset
-    With rsTem
-        .Open temSQL, cnnStores, adOpenStatic, adLockReadOnly
-        If .RecordCount > 0 Then
-            MsgBox "Errors in Collection. Corrected " & .RecordCount & " records."
-        End If
-        While .EOF = False
-            correctCentreId !collectionId, !CollectingCenterID
-            .MoveNext
-        Wend
-    End With
+'    temSQL = "SELECT dbo.tblCollection.CollectionID, dbo.tblCollectingCenter.CollectingCenterID " & _
+'        "                 " & _
+'"FROM          dbo.tblCollectingCenter LEFT OUTER JOIN " & _
+'  "                      dbo.tblSupplier ON dbo.tblCollectingCenter.CollectingCenterID = dbo.tblSupplier.CollectingCenterID RIGHT OUTER JOIN " & _
+' "                       dbo.tblCollection ON dbo.tblSupplier.SupplierID = dbo.tblCollection.SupplierID " & _
+'"Where (dbo.tblCollectingCenter.CollectingCenterID <> dbo.tblCollection.CollectingCenterID) " & _
+'"ORDER BY dbo.tblCollection.CollectionID DESC"
+'
+'    Dim rsTem As New ADODB.Recordset
+'    With rsTem
+'        .Open temSQL, cnnStores, adOpenStatic, adLockReadOnly
+'        If .RecordCount > 0 Then
+'            MsgBox "Errors in Collection. Corrected " & .RecordCount & " records."
+'        End If
+'        While .EOF = False
+'            correctCentreId !collectionId, !CollectingCenterID
+'            .MoveNext
+'        Wend
+'    End With
 End Sub
 
 Private Sub correctCentreId(collectionId As Long, CCID As Long)

@@ -1,0 +1,6 @@
+Use- dataentry
+Super user - process
+Auditer - View
+Accounting - 
+Admin - 
+
